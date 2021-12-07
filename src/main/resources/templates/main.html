@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">카페 목록</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="cafe : ${cafes}" >
+                    <th scope="row">
+                        <h5> ==> </h5>
+                    </th>
+
+                    <td>
+                        <a th:href="@{cafe/detail/{id}(id=${cafe.id})}" target="_blank" style="text-decoration: none;">
+                            <div style="font-weight: bold; font-size: large; color: #92A8D1" th:text="${cafe.name}"></div>
+                            <p th:text="${cafe.address}"></p>
+                            <p th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
+                            <p th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+    </th:block>
+
+</th:block>
+</html>
