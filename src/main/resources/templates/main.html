@@ -22,10 +22,10 @@
                     <td>
                         <a th:href="@{cafe/detail/{id}(id=${cafe.id})}" target="_blank" style="text-decoration: none;">
                             <div style="font-weight: bold; font-size: large; color: #92A8D1" th:text="${cafe.name}"></div>
-                            <p th:text="${cafe.address}"></p>
-                            <p th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
-                            <p th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
-
+                            <p style="margin-bottom: 0px" th:text="${cafe.member}"></p>
+                            <p style="margin-bottom: 0px" th:text="${cafe.address}"></p>
+                            <p style="margin-bottom: 0px; font-size: small" th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
+                            <p style="margin-bottom: 0px; font-size: small" th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
                         </a>
 
                     </td>
@@ -36,6 +36,31 @@
 
 
 
+
+            <div th:with="start=${(cafes.number/maxPage)*maxPage + 1}, end=(${(cafes.totalPages == 0) ? 1 : (start + (maxPage - 1) < cafes.totalPages ? start + (maxPage - 1) : cafes.totalPages)})" >
+                <ul class="pagination pagination-sm justify-content-center">
+                    <!--이전 페이지-->
+                    <li class="page-item" th:classappend="${cafes.number eq 0}?'disabled'">
+                        <a th:href="@{'/?&page=' + ${cafes.number-1}}" aria-label='Previous' class="page-link">
+                            <span aria-hidden='true'>&lt;</span>
+                        </a>
+                    </li>
+                    <!--현재 페이지 그룹-->
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${cafes.number eq page-1}?'active'">
+                        <a th:href="@{'/?&page=' + ${page-1}}" th:text="${page}" class="page-link"></a>
+                    </li>
+                    <!--다음 페이지-->
+                    <li class="page-item" th:classappend="${cafes.number+1 ge cafes.totalPages}?'disabled'">
+                        <a th:href="@{'/?&page=' + ${cafes.number+1}}" aria-label='Next' class="page-link">
+                            <span aria-hidden='true'>&gt;</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            
+            
+            
         </div>
     </th:block>
 
