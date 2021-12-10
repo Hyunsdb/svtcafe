@@ -4,40 +4,95 @@
     <th:block th:fragment="content">
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <form th:action="@{/}" role="form" method="get" th:object="${cafes}">
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">카페 목록</th>
-                </tr>
-                </thead>
-                <tbody>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">카페 목록</th>
+                    </tr>
+                    </thead>
 
-                <tr th:each="cafe : ${cafes}" >
-                    <th scope="row">
-                        <h5> ==> </h5>
-                    </th>
+                    <tbody>
+                    <tr th:each="cafe : ${cafes}">
+                        <th scope="row">
+                            <h5 th:text="${cafe.id}"></h5>
+                        </th>
 
-                    <td>
-                        <a th:href="@{cafe/detail/{id}(id=${cafe.id})}" target="_blank" style="text-decoration: none;">
-                            <div style="font-weight: bold; font-size: large; color: #92A8D1" th:text="${cafe.name}"></div>
-                            <p th:text="${cafe.address}"></p>
-                            <p th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
-                            <p th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
+                        <td>
+                            <a th:href="@{cafe/detail/{id}(id=${cafe.id})}" target="_blank"
+                               style="text-decoration: none;">
+                                <div style="font-weight: bold; font-size: large; color: #92A8D1"
+                                     th:text="${cafe.name}"></div>
+                                <p style="margin-bottom: 0px" th:text="${cafe.member}"></p>
+                                <p style="margin-bottom: 0px" th:text="${cafe.address}"></p>
+                                <p style="margin-bottom: 0px; font-size: small"
+                                   th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
+                                <p style="margin-bottom: 0px; font-size: small"
+                                   th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
+                            </a>
 
-                        </a>
+                        </td>
+                    </tr>
+                    </tbody>
 
-                    </td>
+                </table>
 
-                </tr>
-                </tbody>
-            </table>
 
+                <!--페이지-->
+                <div th:with="start=${(cafes.number/maxPage)*maxPage + 1}, end=(${(cafes.totalPages == 0) ? 1 : (start + (maxPage - 1) < cafes.totalPages ? start + (maxPage - 1) : cafes.totalPages)})">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <!--이전 페이지-->
+                        <li class="page-item" th:classappend="${cafes.number eq 0}?'disabled'">
+                            <a th:href="@{/(page=${cafes.number-1},searchMemberType=${cafeSearchDto.searchMemberType})}"
+                               aria-label='Previous' class="page-link">
+                                <span aria-hidden='true'>&lt;</span>
+                            </a>
+                        </li>
+                        <!--현재 페이지 그룹-->
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                            th:classappend="${cafes.number eq page-1}?'active'">
+                            <a th:href="@{/(page=${page-1},searchMemberType=${cafeSearchDto.searchMemberType})}"
+                               th:text="${page}" class="page-link"></a>
+                        </li>
+                        <!--다음 페이지-->
+                        <li class="page-item" th:classappend="${cafes.number+1 ge cafes.totalPages}?'disabled'">
+                            <a th:href="@{/(page=${cafes.number+1},searchMemberType=${cafeSearchDto.searchMemberType})}"
+                               aria-label='Next' class="page-link">
+                                <span aria-hidden='true'>&gt;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+
+                <div class="form-check-inline" th:object="${cafeSearchDto}">
+                    <select th:field="*{searchMemberType}" class="form-control" style="width: auto">
+                        <option value="">전체</option>
+                        <option value="SCOUPS">에스쿱스</option>
+                        <option value="Jeonghan">정한</option>
+                        <option value="Joshua">조슈아</option>
+                        <option value="Dino">준</option>
+                        <option value="Jun">호시</option>
+                        <option value="Hoshi">원우</option>
+                        <option value="Wonwoo">우지</option>
+                        <option value="THE8">디에잇</option>
+                        <option value="Mingyu">민규</option>
+                        <option value="DK">도겸</option>
+                        <option value="SeungKwan">승관</option>
+                        <option value="Vernon">버논</option>
+                        <option value="Dino">디노</option>
+                    </select>
+                    <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+                </div>
+
+            </form>
 
 
         </div>
     </th:block>
-
 </th:block>
 </html>

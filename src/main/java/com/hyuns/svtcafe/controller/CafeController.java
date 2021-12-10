@@ -27,6 +27,6 @@ public class CafeController {
     @PostMapping("/add")
     public String addCafe(@ModelAttribute CafeFormDto cafeFormDto){
         cafeService.save(cafeFormDto);
-        return "main";
+        return "redirect:/";
     }
 }
