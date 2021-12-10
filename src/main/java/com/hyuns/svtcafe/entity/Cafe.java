@@ -1,5 +1,6 @@
 package com.hyuns.svtcafe.entity;
 
+import com.hyuns.svtcafe.constant.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,9 @@ public class Cafe {
     @Column(name = "cafe_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private Member member;
+
     private String name;
 
     private String address;
@@ -30,7 +34,8 @@ public class Cafe {
     private String cafeLink;
 
     @Builder
-    public Cafe(String name, String address, LocalDate eventStart, LocalDate eventEnd, String cafeLink) {
+    public Cafe(Member member, String name, String address, LocalDate eventStart, LocalDate eventEnd, String cafeLink) {
+        this.member=member;
         this.name = name;
         this.address = address;
         this.eventStart = eventStart;
