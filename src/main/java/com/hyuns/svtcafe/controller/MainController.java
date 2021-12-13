@@ -22,7 +22,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final CafeRepository cafeRepository;
     private final CafeService cafeService;
 
     @GetMapping({"/","/{page}"})
@@ -38,17 +37,5 @@ public class MainController {
 
         return "main";
     }
-
-//    @GetMapping("/")
-//    public String mainPage(Model model, Optional<Integer> page) {
-//        //페이지 번호가 없으면 0
-//        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,3);
-//        Page<Cafe> cafeList = cafeService.getCafeList(pageable);
-//        model.addAttribute("cafes", cafeList);
-//        model.addAttribute("maxPage", 5);
-//
-//
-//        return "main";
-//    }
 
 }
