@@ -1,13 +1,9 @@
 package com.hyuns.svtcafe.service;
 
 import com.hyuns.svtcafe.dto.BoardFormDto;
-import com.hyuns.svtcafe.dto.CafeSearchDto;
 import com.hyuns.svtcafe.entity.Board;
-import com.hyuns.svtcafe.entity.Cafe;
 import com.hyuns.svtcafe.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +14,11 @@ public class BoardService {
 
     public Long save(BoardFormDto boardFormDto) {
         return boardRepository.save(boardFormDto.toEntity()).getId();
+    }
+
+    @Transactional
+    public Board getPost(Long bno){
+        return boardRepository.findById(bno).get();
     }
 
 }

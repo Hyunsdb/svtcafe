@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <form class="form-inline">
+
+            <div class="form-group">
+                <label>작성자 : [[${post.writer}]]</label>
+            </div>
+
+            <p class="small">[[${#temporals.format(post.regTime, 'yyyy/MM/dd HH:mm:ss')}]]</p>
+
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" name="title" th:value="${post.title}" readonly>
+            </div>
+            <br>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea class="form-control" rows="10" th:text="${post.content}" name="content" readonly></textarea>
+            </div>
+
+
+        </form>
+    </th:block>
+
+</th:block>
+</html>
