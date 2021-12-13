@@ -1,6 +1,7 @@
 package com.hyuns.svtcafe.controller;
 
 import com.hyuns.svtcafe.dto.BoardFormDto;
+import com.hyuns.svtcafe.entity.Board;
 import com.hyuns.svtcafe.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,14 @@ public class BoardController {
     public String addPost(@ModelAttribute BoardFormDto boardFormDto) {
         boardService.save(boardFormDto);
         return "redirect:/board/list";
+    }
+
+    @GetMapping("/{bno}")
+    public String PostDetail(@PathVariable("bno") Long boardId, Model model) {
+        Board post = boardService.getPost(boardId);
+        model.addAttribute("post",post);
+        return "board/read";
+
     }
 
 }
