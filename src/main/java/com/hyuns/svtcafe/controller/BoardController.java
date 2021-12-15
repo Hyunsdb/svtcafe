@@ -2,11 +2,9 @@ package com.hyuns.svtcafe.controller;
 
 import com.hyuns.svtcafe.dto.BoardFormDto;
 import com.hyuns.svtcafe.entity.Board;
-import com.hyuns.svtcafe.entity.Cafe;
 import com.hyuns.svtcafe.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -67,6 +65,13 @@ public class BoardController {
         boardService.updatePost(boardFormDto, bno);
 
         return "redirect:/board/" + bno;
+    }
+
+    @PostMapping("/remove/{bno}")
+    public String deletePost(@PathVariable Long bno) {
+        boardService.deletePost(bno);
+
+        return "redirect:/board/list";
     }
 
 }
