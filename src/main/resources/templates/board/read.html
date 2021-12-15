@@ -5,7 +5,7 @@
 
     <th:block th:fragment="content">
 
-        <form class="form-inline">
+        <form class="form-inline" method="post">
 
             <div class="form-group">
                 <label>작성자 : [[${post.writer}]]</label>
@@ -24,11 +24,13 @@
             </div>
 
             <a th:href="@{/board/modify/{bno}(bno = ${post.id})}">
-                <button type="button" class="btn btn-primary">Modify</button>
+                <button type="button" class="btn btn-primary">수정</button>
             </a>
-<!--            <div th:unless="${#strings.isEmpty(itemFormDto.id)}" style="text-align: center">-->
-<!--                <button th:formaction="@{'/admin/item/' + ${itemFormDto.id} }" type="submit" class="btn btn-primary">수정</button>-->
-<!--            </div>-->
+        </form>
+
+        <form id="delete-form" th:action="@{'/board/remove/' + ${post.id}}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button class="btn btn-primary" id="delete-btn">삭제</button>
         </form>
     </th:block>
 
