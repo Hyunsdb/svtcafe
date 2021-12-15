@@ -50,11 +50,10 @@ public class BoardController {
     }
 
     @PostMapping("/modify/{bno}")
-    public String updatePost(@ModelAttribute BoardFormDto boardFormDto, @PathVariable Long bno){
-        Long update = boardService.update(boardFormDto, bno);
-        System.out.println(update);
+    public String updatePost(@ModelAttribute BoardFormDto boardFormDto, @PathVariable Long bno) {
+        boardService.updatePost(boardFormDto, bno);
 
-
-        return "redirect:/board/"+bno;
+        return "redirect:/board/" + bno;
     }
+
 }
