@@ -23,7 +23,12 @@
                 <textarea class="form-control" rows="10" th:text="${post.content}" name="content" readonly></textarea>
             </div>
 
-
+            <a th:href="@{/board/modify/{bno}(bno = ${post.id})}">
+                <button type="button" class="btn btn-primary">Modify</button>
+            </a>
+<!--            <div th:unless="${#strings.isEmpty(itemFormDto.id)}" style="text-align: center">-->
+<!--                <button th:formaction="@{'/admin/item/' + ${itemFormDto.id} }" type="submit" class="btn btn-primary">수정</button>-->
+<!--            </div>-->
         </form>
     </th:block>
 
