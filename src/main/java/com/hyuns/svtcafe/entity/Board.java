@@ -1,5 +1,6 @@
 package com.hyuns.svtcafe.entity;
 
+import com.hyuns.svtcafe.dto.BoardFormDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,12 @@ public class Board extends BaseEntity {
         this.password = password;
         this.content = content;
         this.writer = writer;
+    }
+
+    public void updatePost(BoardFormDto boardFormDto){
+        this.writer = boardFormDto.getWriter();
+        this.password = boardFormDto.getPassword();
+        this.title = boardFormDto.getTitle();
+        this.content = boardFormDto.getContent();
     }
 }
