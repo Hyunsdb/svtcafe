@@ -26,7 +26,7 @@ public class BoardService {
     }
 
     @Transactional
-    public Long update(BoardFormDto boardFormDto, Long id){
+    public Long updatePost(BoardFormDto boardFormDto, Long id){
         Board post = boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         post.updatePost(boardFormDto);
 
