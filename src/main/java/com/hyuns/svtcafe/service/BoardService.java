@@ -26,6 +26,11 @@ public class BoardService {
     }
 
     @Transactional
+    public Page<Board> getBoardList(Pageable pageable) {
+        return boardRepository.findAll(pageable);
+    }
+
+    @Transactional
     public Long updatePost(BoardFormDto boardFormDto, Long id){
         Board post = boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         post.updatePost(boardFormDto);

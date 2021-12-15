@@ -22,6 +22,19 @@ import java.util.Optional;
 public class BoardController {
     private final BoardService boardService;
 
+    @GetMapping({"/list"})
+    public String getBoardList(@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+
+        //페이지 번호가 없으면 0
+        Page<Board> boardList = boardService.getBoardList(pageable);
+
+        model.addAttribute("board", boardList);
+        model.addAttribute("maxPage", 5);
+
+
+        return "board/list";
+    }
+
     @GetMapping("/add")
     public String addPostForm(Model model) {
         model.addAttribute("boardFormDto", new BoardFormDto());
