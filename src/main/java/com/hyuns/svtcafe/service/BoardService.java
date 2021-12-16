@@ -6,6 +6,7 @@ import com.hyuns.svtcafe.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +16,10 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Long save(BoardFormDto boardFormDto) {
-        return boardRepository.save(boardFormDto.toEntity()).getId();
+        return boardRepository.save(boardFormDto.toEntity(passwordEncoder)).getId();
     }
 
     @Transactional
