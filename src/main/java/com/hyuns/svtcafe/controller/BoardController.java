@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -45,7 +44,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/{bno}")
+    @GetMapping("{bno}")
     public String PostDetail(@PathVariable("bno") Long boardId, Model model) {
         Board post = boardService.getPost(boardId);
         model.addAttribute("post", post);
