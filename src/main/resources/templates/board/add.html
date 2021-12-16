@@ -6,6 +6,7 @@
     <th:block th:fragment="content">
 
 
+        <!--th:action으로 요청하면 csrf토큰 자동으로 생성해줌-->
         <form th:action="@{/board/add}" th:method="post" th:object="${boardFormDto}">
             <div class="form-group">
                 <label>작성자</label>

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -28,10 +29,10 @@ public class BoardFormDto {
         this.modDate = modDate;
     }
 
-    public Board toEntity(){
+    public Board toEntity(PasswordEncoder passwordEncoder){
         return Board.builder()
                 .writer(writer)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .title(title)
                 .content(content)
                 .build();
