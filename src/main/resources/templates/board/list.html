@@ -21,11 +21,11 @@
 
                 <tr th:each="post : ${board}" >
                     <th scope="row">
-                        <a th:href="@{/board/bno(bno = ${post.id})}" th:text="${post.id}">
+                        <a th:href="@{/board/{bno}(bno=${post.id})}" th:text="${post.id}">
                         </a>
                     </th>
                     <td>
-                        <a th:href="@{/board/bno(bno=${post.id})}" th:text="${post.title}"></a>
+                        <a th:href="@{/board/{bno}(bno=${post.id})}" th:text="${post.title}"></a>
                     </td>
                     <td> <div class="small" th:text="${post.writer}"></div></td>
 
