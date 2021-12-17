@@ -23,15 +23,50 @@
                 <textarea class="form-control" rows="10" th:text="${post.content}" name="content" readonly></textarea>
             </div>
 
-            <a th:href="@{/board/modify/{bno}(bno = ${post.id})}">
-                <button type="button" class="btn btn-primary">수정</button>
-            </a>
+<!--            <a th:href="@{/board/modify/{bno}(bno = ${post.id})}">-->
+<!--                <button type="button" onclick="inputPassword()" class="btn btn-primary">수정</button>-->
+<!--            </a>-->
+
         </form>
+
+        <p>
+            <button type="button" class="btn btn-primary" onclick="inputPassword()">수정</button>
+        </p>
 
         <form id="delete-form" th:action="@{'/board/remove/' + ${post.id}}" method="post">
             <input type="hidden" name="_method" value="delete"/>
             <button class="btn btn-primary" id="delete-btn">삭제</button>
         </form>
+
+
+
+        <script>function inputPassword() {
+            var bno = [[${post.id}]];
+            var pass1 = prompt('암호를 입력하십시오','암호를 입력하세요');
+
+            if(pass1){
+                $.ajax({
+                    url:"/board/modify/test",
+                    method:'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        bno : bno,
+                        pass1:pass1
+                    }),
+                    cache:false,
+                    success 	: function(data) {
+                        alert("success");
+                    },
+                    error: function(request,status,error){
+                        console.info(error);
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+                    }
+                });
+            }
+        }
+        </script>
+
     </th:block>
 
 </th:block>
