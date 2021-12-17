@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class CafeController {
     private final CafeService cafeService;
-    private final CafeRepository cafeRepository;
 
     @GetMapping("/add")
     public String addCafeForm(Model model) {

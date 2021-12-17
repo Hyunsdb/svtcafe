@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -44,7 +46,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("{bno}")
+    @GetMapping("/{bno}")
     public String PostDetail(@PathVariable("bno") Long boardId, Model model) {
         Board post = boardService.getPost(boardId);
         model.addAttribute("post", post);
@@ -72,5 +74,26 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+
+
+
+//    @ResponseBody
+//    @PostMapping(value = "/modify/test")
+//    public void test(@RequestParam("pass1") String pass1, @RequestParam("bno") String bno){
+//
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+//        System.out.println(pass1);
+//        System.out.println(bno);
+//    }
+
+    @ResponseBody
+    @PostMapping(value = "/modify/test")
+    public void test(@RequestBody Map<String,Object> map){
+
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        System.out.println(map.get("bno").toString());
+        System.out.println(map.get("pass1").toString());
+    }
+
 
 }
