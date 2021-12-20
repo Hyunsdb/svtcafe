@@ -1,6 +1,7 @@
 package com.hyuns.svtcafe.controller;
 
 import com.hyuns.svtcafe.dto.BoardFormDto;
+import com.hyuns.svtcafe.dto.BoardModifyDto;
 import com.hyuns.svtcafe.entity.Board;
 import com.hyuns.svtcafe.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,11 +91,13 @@ public class BoardController {
 
     @ResponseBody
     @PostMapping(value = "/modify/test")
-    public void test(@RequestBody Map<String,Object> map){
+    public ResponseEntity test(@RequestBody BoardModifyDto modifyInfo){
 
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-        System.out.println(map.get("bno").toString());
-        System.out.println(map.get("pass1").toString());
+        if (boardService.checkPassword(modifyInfo)) {
+            return new ResponseEntity<String>("잘못된 비밀번호입니다.", HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<Long>(HttpStatus.OK);
+        }
     }
 
 

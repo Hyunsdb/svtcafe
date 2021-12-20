@@ -1,6 +1,7 @@
 package com.hyuns.svtcafe.service;
 
 import com.hyuns.svtcafe.dto.BoardFormDto;
+import com.hyuns.svtcafe.dto.BoardModifyDto;
 import com.hyuns.svtcafe.entity.Board;
 import com.hyuns.svtcafe.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,16 @@ public class BoardService {
     @Transactional
     public void deletePost(Long id){
         boardRepository.deleteById(id);
+    }
+
+
+    @Transactional
+    public boolean checkPassword(BoardModifyDto boardModifyDto){
+        Board findBoard = boardRepository.findById(boardModifyDto.getBno()).get();
+        if (!passwordEncoder.matches(boardModifyDto.getPassword(), findBoard.getPassword())) {
+            return true;
+        }
+        return false;
     }
 
 }
