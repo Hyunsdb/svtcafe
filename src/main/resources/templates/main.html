@@ -21,7 +21,7 @@
                         </th>
 
                         <td>
-                            <a th:href="@{cafe/detail/{id}(id=${cafe.id})}" target="_blank"
+                            <a th:href="@{'cafe/'+${cafe.id}}" target="_blank"
                                style="text-decoration: none;">
                                 <div style="font-weight: bold; font-size: large; color: #92A8D1"
                                      th:text="${cafe.name}"></div>

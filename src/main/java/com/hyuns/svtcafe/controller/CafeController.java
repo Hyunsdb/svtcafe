@@ -1,15 +1,13 @@
 package com.hyuns.svtcafe.controller;
 
 import com.hyuns.svtcafe.dto.CafeFormDto;
+import com.hyuns.svtcafe.entity.Cafe;
 import com.hyuns.svtcafe.repository.CafeRepository;
 import com.hyuns.svtcafe.service.CafeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("cafe")
@@ -27,5 +25,12 @@ public class CafeController {
     public String addCafe(@ModelAttribute CafeFormDto cafeFormDto){
         cafeService.save(cafeFormDto);
         return "redirect:/";
+    }
+
+    @GetMapping("/{cno}")
+    public String detailCafe(@PathVariable("cno") Long cno, Model model) {
+        Cafe findCafe = cafeService.getDetail(cno);
+        model.addAttribute("cafe", findCafe);
+        return "/cafe/read";
     }
 }

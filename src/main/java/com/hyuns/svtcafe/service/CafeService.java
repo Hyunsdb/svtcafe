@@ -26,4 +26,8 @@ public class CafeService {
         return cafeRepository.getMainPage(cafeSearchDto,pageable);
     }
 
+    public Cafe getDetail(Long cno) {
+        return cafeRepository.findById(cno).get();
+    }
+
 }
