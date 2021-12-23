@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <form class="form-inline" method="post">
+
+            <div class="form-group">
+                <label>작성자 : [[${post.writer}]]</label>
+            </div>
+
+            <p class="small">[[${#temporals.format(post.regTime, 'yyyy/MM/dd HH:mm:ss')}]]</p>
+
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" name="title" th:value="${post.title}" readonly>
+            </div>
+            <br>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea class="form-control" rows="10" th:text="${post.content}" name="content" readonly></textarea>
+            </div>
+
+<!--            <a th:href="@{/board/modify/{bno}(bno = ${post.id})}">-->
+<!--                <button type="button" onclick="inputPassword()" class="btn btn-primary">수정</button>-->
+<!--            </a>-->
+
+        </form>
+
+        <p>
+            <button type="button" class="btn btn-primary" onclick="inputPassword()">수정</button>
+        </p>
+
+        <form id="delete-form" th:action="@{'/board/remove/' + ${post.id}}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button class="btn btn-primary" id="delete-btn">삭제</button>
+        </form>
+
+
+
+        <script>function inputPassword() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            var bno = [[${post.id}]];
+            var password = prompt('비밀번호를 입력하십시오','비밀번호를 입력하세요');
+
+            if(password){
+                $.ajax({
+                    url:"/board/modify/test",
+                    method:'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        bno : bno,
+                        password:password
+                    }),
+                    cache:false,
+                    beforeSend:function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success 	: function(result, status) {
+                        location.href ='/board/modify/'+bno;
+                    },
+                    error: function(jqXHR, status, error){
+                        if(jqXHR.status=='403'){
+                            alert(jqXHR.responseText);
+                        }
+                        else{
+                            console.info("code:"+jqXHR.status+"\n"+"message:"+jqXHR.responseText+"\n"+"error:"+error);
+                        }
+                    }
+                });
+            }
+        }
+        </script>
+
+    </th:block>
+
+</th:block>
+</html>

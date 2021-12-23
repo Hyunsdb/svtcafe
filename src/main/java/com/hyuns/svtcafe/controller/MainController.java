@@ -2,18 +2,14 @@ package com.hyuns.svtcafe.controller;
 
 import com.hyuns.svtcafe.dto.CafeSearchDto;
 import com.hyuns.svtcafe.entity.Cafe;
-import com.hyuns.svtcafe.repository.CafeRepository;
 import com.hyuns.svtcafe.service.CafeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final CafeRepository cafeRepository;
     private final CafeService cafeService;
 
     @GetMapping({"/","/{page}"})
@@ -38,17 +33,5 @@ public class MainController {
 
         return "main";
     }
-
-//    @GetMapping("/")
-//    public String mainPage(Model model, Optional<Integer> page) {
-//        //페이지 번호가 없으면 0
-//        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,3);
-//        Page<Cafe> cafeList = cafeService.getCafeList(pageable);
-//        model.addAttribute("cafes", cafeList);
-//        model.addAttribute("maxPage", 5);
-//
-//
-//        return "main";
-//    }
 
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+
+        <form th:action="@{/board/list}" role="form" method="get" th:object="${board}">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">no</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="post : ${board}" >
+                    <th scope="row">
+                        <a th:href="@{/board/{bno}(bno=${post.id})}" th:text="${post.id}">
+                        </a>
+                    </th>
+                    <td>
+                        <a th:href="@{/board/{bno}(bno=${post.id})}" th:text="${post.title}"></a>
+                    </td>
+                    <td> <div class="small" th:text="${post.writer}"></div></td>
+
+                    <td> <div class="small" th:text="${#temporals.format(post.regTime,'yyyy.MM.dd')}"></div></td>
+                </tr>
+
+
+
+                </tbody>
+            </table>
+
+
+            <!--페이지-->
+            <div th:with="start=${(board.number/maxPage)*maxPage + 1}, end=(${(board.totalPages == 0) ? 1 : (start + (maxPage - 1) < board.totalPages ? start + (maxPage - 1) : board.totalPages)})">
+                <ul class="pagination pagination-sm justify-content-center">
+                    <!--이전 페이지-->
+                    <li class="page-item" th:classappend="${board.number eq 0}?'disabled'">
+                        <a th:href="@{'/board/list?page=' + ${board.number-1}}"
+                           aria-label='Previous' class="page-link">
+                            <span aria-hidden='true'>&lt;</span>
+                        </a>
+                    </li>
+                    <!--현재 페이지 그룹-->
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                        th:classappend="${board.number eq page-1}?'active'">
+                        <a th:href="@{'/board/list/?page='+${page-1}}"
+                           th:text="${page}" class="page-link"></a>
+                    </li>
+                    <!--다음 페이지-->
+                    <li class="page-item" th:classappend="${board.number+1 ge board.totalPages}?'disabled'">
+                        <a th:href="@{'/board/list?page=' + ${board.number-1}}"
+                           aria-label='Next' class="page-link">
+
+                            <span aria-hidden='true'>&gt;</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </form>
+
+        
+        
+        
+
+        <a href="/board/add" role="button" class="btn btn-primary">글 등록</a>
+
+
+    </th:block>
+
+</th:block>
+</html>
