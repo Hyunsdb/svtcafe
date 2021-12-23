@@ -21,7 +21,7 @@
                         </th>
 
                         <td>
-                            <a th:href="@{cafe/detail/{id}(id=${cafe.id})}" target="_blank"
+                            <a th:href="@{'cafe/'+${cafe.id}}" target="_blank"
                                style="text-decoration: none;">
                                 <div style="font-weight: bold; font-size: large; color: #92A8D1"
                                      th:text="${cafe.name}"></div>
@@ -68,8 +68,10 @@
                 </div>
 
 
+                <div class="col-md">
 
-                <div class="form-check-inline" th:object="${cafeSearchDto}">
+                <div style="display: inline-block" class="form-check-inline" th:object="${cafeSearchDto}">
+
                     <select th:field="*{searchMemberType}" class="form-control" style="width: auto">
                         <option value="">전체</option>
                         <option value="SCOUPS">에스쿱스</option>
@@ -86,9 +88,12 @@
                         <option value="Vernon">버논</option>
                         <option value="Dino">디노</option>
                     </select>
-                    <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+                </div>
+                <div style="display: inline-block">
+                    <button  id="searchBtn" type="submit" class="btn btn-primary">검색</button>
                 </div>
 
+                </div>
             </form>
 
 
