@@ -5,6 +5,7 @@ import com.hyuns.svtcafe.dto.BoardModifyDto;
 import com.hyuns.svtcafe.entity.Board;
 import com.hyuns.svtcafe.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -13,11 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/board")
@@ -44,7 +49,11 @@ public class BoardController {
     }
 
     @PostMapping("/add")
-    public String addPost(@ModelAttribute BoardFormDto boardFormDto) {
+    public String addPost(@Valid @ModelAttribute BoardFormDto boardFormDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "board/add";
+        }
+
         boardService.save(boardFormDto);
         return "redirect:/board/list";
     }
@@ -54,7 +63,6 @@ public class BoardController {
         Board post = boardService.getPost(boardId);
         model.addAttribute("post", post);
         return "board/read";
-
     }
 
     @GetMapping("/modify/{bno}")
@@ -65,7 +73,13 @@ public class BoardController {
     }
 
     @PostMapping("/modify/{bno}")
-    public String updatePost(@ModelAttribute BoardFormDto boardFormDto, @PathVariable Long bno) {
+    public String updatePost(@Validated @ModelAttribute("post") BoardFormDto boardFormDto, BindingResult bindingResult, @PathVariable Long bno, Model model) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("====================================");
+            model.addAttribute("bno", bno);
+            return "board/modify";
+        }
+
         boardService.updatePost(boardFormDto, bno);
 
         return "redirect:/board/" + bno;
@@ -90,8 +104,8 @@ public class BoardController {
 //    }
 
     @ResponseBody
-    @PostMapping(value = "/modify/test")
-    public ResponseEntity test(@RequestBody BoardModifyDto modifyInfo){
+    @PostMapping(value = "/modify/login")
+    public ResponseEntity checkPassword(@RequestBody BoardModifyDto modifyInfo){
 
         if (boardService.checkPassword(modifyInfo)) {
             return new ResponseEntity<String>("잘못된 비밀번호입니다.", HttpStatus.FORBIDDEN);

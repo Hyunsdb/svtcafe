@@ -1,11 +1,15 @@
 package com.hyuns.svtcafe.entity;
 
 import com.hyuns.svtcafe.dto.BoardFormDto;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -33,9 +37,9 @@ public class Board extends BaseEntity {
         this.writer = writer;
     }
 
-    public void updatePost(BoardFormDto boardFormDto){
+    public void updatePost(BoardFormDto boardFormDto, PasswordEncoder passwordEncoder){
         this.writer = boardFormDto.getWriter();
-        this.password = boardFormDto.getPassword();
+        this.password = passwordEncoder.encode(boardFormDto.getPassword());
         this.title = boardFormDto.getTitle();
         this.content = boardFormDto.getContent();
     }

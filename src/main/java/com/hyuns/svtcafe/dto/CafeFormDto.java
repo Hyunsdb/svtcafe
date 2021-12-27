@@ -8,18 +8,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter @Setter
 @NoArgsConstructor
 public class CafeFormDto {
+    @NotBlank(message = "카페 이름을 입력해주세요.")
     private String name;
+
+    @NotBlank(message = "주소를 선택해주세요.")
     private String address;
+
+    @NotNull(message = "맴버를 선택해주세요.")
     private Member member;
 
+    @NotNull(message = "시작 날짜를 선택해주세요.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventStart;
 
+    @NotNull(message = "마감 날짜를 선택해주세요.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventEnd;
 

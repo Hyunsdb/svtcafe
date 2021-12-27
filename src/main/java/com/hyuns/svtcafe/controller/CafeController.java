@@ -7,6 +7,8 @@ import com.hyuns.svtcafe.service.CafeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -22,7 +24,11 @@ public class CafeController {
     }
 
     @PostMapping("/add")
-    public String addCafe(@ModelAttribute CafeFormDto cafeFormDto){
+    public String addCafe(@Validated @ModelAttribute CafeFormDto cafeFormDto, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "/cafe/add";
+        }
+
         cafeService.save(cafeFormDto);
         return "redirect:/";
     }

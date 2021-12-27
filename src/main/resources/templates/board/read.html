@@ -23,9 +23,6 @@
                 <textarea class="form-control" rows="10" th:text="${post.content}" name="content" readonly></textarea>
             </div>
 
-<!--            <a th:href="@{/board/modify/{bno}(bno = ${post.id})}">-->
-<!--                <button type="button" onclick="inputPassword()" class="btn btn-primary">수정</button>-->
-<!--            </a>-->
 
         </form>
 
@@ -48,7 +45,7 @@
 
             if(password){
                 $.ajax({
-                    url:"/board/modify/test",
+                    url:"/board/modify/login",
                     method:'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
