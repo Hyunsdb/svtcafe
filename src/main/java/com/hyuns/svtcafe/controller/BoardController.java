@@ -75,7 +75,6 @@ public class BoardController {
     @PostMapping("/modify/{bno}")
     public String updatePost(@Validated @ModelAttribute("post") BoardFormDto boardFormDto, BindingResult bindingResult, @PathVariable Long bno, Model model) {
         if (bindingResult.hasErrors()) {
-            System.out.println("====================================");
             model.addAttribute("bno", bno);
             return "board/modify";
         }
@@ -85,8 +84,10 @@ public class BoardController {
         return "redirect:/board/" + bno;
     }
 
-    @PostMapping("/remove/{bno}")
+    @PostMapping("/delete/{bno}")
     public String deletePost(@PathVariable Long bno) {
+
+        System.out.println("===============================");
         boardService.deletePost(bno);
 
         return "redirect:/board/list";
@@ -105,9 +106,20 @@ public class BoardController {
 
     @ResponseBody
     @PostMapping(value = "/modify/login")
-    public ResponseEntity checkPassword(@RequestBody BoardModifyDto modifyInfo){
+    public ResponseEntity modifyCheckPassword(@RequestBody BoardModifyDto modifyInfo){
 
         if (boardService.checkPassword(modifyInfo)) {
+            return new ResponseEntity<String>("잘못된 비밀번호입니다.", HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<Long>(HttpStatus.OK);
+        }
+    }
+
+
+    @ResponseBody
+    @PostMapping("/delete/login")
+    public ResponseEntity deleteCheckPassword(@RequestBody BoardModifyDto modifyDto) {
+        if (boardService.checkPassword(modifyDto)) {
             return new ResponseEntity<String>("잘못된 비밀번호입니다.", HttpStatus.FORBIDDEN);
         } else {
             return new ResponseEntity<Long>(HttpStatus.OK);
