@@ -25,17 +25,17 @@
         </form>
 
 
-        <div class="container">
-            <p>
-                <button type="button" class="btn btn-primary" onclick="modifyPost()">수정</button>
-            </p>
-            <form id="delete-form" th:action="@{'/board/delete/' + ${post.id}}" method="post">
-                <button class="btn btn-primary" id="delete-btn" onclick="deletePost()">삭제</button>
-            </form>
+        <div class="float-end col-md">
+            <div style="display: inline-block">
+            <button type="button" class="btn btn-primary end-0" onclick="modifyPost()">수정</button>
+            </div>
 
+            <div style="display: inline-block">
+                <form id="delete-form" th:action="@{'/board/delete/' + ${post.id}}" method="post">
+                    <button class="btn btn-primary" id="delete-btn" onclick="deletePost()">삭제</button>
+                </form>
+            </div>
         </div>
-
-
 
 
         <script>

@@ -45,7 +45,7 @@
                     <ul class="pagination pagination-sm justify-content-center">
                         <!--이전 페이지-->
                         <li class="page-item" th:classappend="${cafes.number eq 0}?'disabled'">
-                            <a th:href="@{/(page=${cafes.number-1},searchMemberType=${cafeSearchDto.searchMemberType})}"
+                            <a th:href="@{/(page=${cafes.number-1},searchMemberType=${cafeSearchDto.searchMemberType},searchCafeName=${cafeSearchDto.searchCafeName})}"
                                aria-label='Previous' class="page-link">
                                 <span aria-hidden='true'>&lt;</span>
                             </a>
@@ -53,12 +53,12 @@
                         <!--현재 페이지 그룹-->
                         <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
                             th:classappend="${cafes.number eq page-1}?'active'">
-                            <a th:href="@{/(page=${page-1},searchMemberType=${cafeSearchDto.searchMemberType})}"
+                            <a th:href="@{/(page=${page-1},searchMemberType=${cafeSearchDto.searchMemberType},searchCafeName=${cafeSearchDto.searchCafeName})}"
                                th:text="${page}" class="page-link"></a>
                         </li>
                         <!--다음 페이지-->
                         <li class="page-item" th:classappend="${cafes.number+1 ge cafes.totalPages}?'disabled'">
-                            <a th:href="@{/(page=${cafes.number+1},searchMemberType=${cafeSearchDto.searchMemberType})}"
+                            <a th:href="@{/(page=${cafes.number+1},searchMemberType=${cafeSearchDto.searchMemberType},searchCafeName=${cafeSearchDto.searchCafeName})}"
                                aria-label='Next' class="page-link">
                                 <span aria-hidden='true'>&gt;</span>
                             </a>
@@ -68,30 +68,37 @@
                 </div>
 
 
-                <div class="col-md">
+                <div class="col-md" th:object="${cafeSearchDto}">
 
-                <div style="display: inline-block" class="form-check-inline" th:object="${cafeSearchDto}">
+                    <div style="display: inline-block" class="form-check-inline">
 
-                    <select th:field="*{searchMemberType}" class="form-control" style="width: auto">
-                        <option value="">전체</option>
-                        <option value="SCOUPS">에스쿱스</option>
-                        <option value="Jeonghan">정한</option>
-                        <option value="Joshua">조슈아</option>
-                        <option value="Dino">준</option>
-                        <option value="Jun">호시</option>
-                        <option value="Hoshi">원우</option>
-                        <option value="Wonwoo">우지</option>
-                        <option value="THE8">디에잇</option>
-                        <option value="Mingyu">민규</option>
-                        <option value="DK">도겸</option>
-                        <option value="SeungKwan">승관</option>
-                        <option value="Vernon">버논</option>
-                        <option value="Dino">디노</option>
-                    </select>
-                </div>
-                <div style="display: inline-block">
-                    <button  id="searchBtn" type="submit" class="btn btn-primary">검색</button>
-                </div>
+                        <select th:field="*{searchMemberType}" class="form-control" style="width: auto">
+                            <option value=""> 맴버 선택 ▼ /option>
+                            <option value="SCOUPS">에스쿱스</option>
+                            <option value="Jeonghan">정한</option>
+                            <option value="Joshua">조슈아</option>
+                            <option value="Jun">준</option>
+                            <option value="Hoshi">호시</option>
+                            <option value="Wonwoo">원우</option>
+                            <option value="WOOZI">우지</option>
+                            <option value="THE8">디에잇</option>
+                            <option value="Mingyu">민규</option>
+                            <option value="DK">도겸</option>
+                            <option value="SeungKwan">승관</option>
+                            <option value="Vernon">버논</option>
+                            <option value="Dino">디노</option>
+                        </select>
+
+                    </div>
+
+                    <div style="display: inline-block">
+                        <input th:field="*{searchCafeName}" type="text" class="form-control" placeholder="카페 이름으로 검색">
+                    </div>
+
+
+                    <div style="display: inline-block">
+                        <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+                    </div>
 
                 </div>
             </form>
