@@ -26,7 +26,8 @@ public class CafeRepositoryCustomImpl implements CafeRepositoryCustom {
     public Page<Cafe> getMainPage(CafeSearchDto cafeSearchDto, Pageable pageable) {
         QueryResults<Cafe> results = jpaQueryFactory
                 .selectFrom(QCafe.cafe)
-                .where(searchMemberEq(cafeSearchDto.getSearchMemberType()))
+                .where(searchMemberEq(cafeSearchDto.getSearchMemberType()),
+                        searchByLike(cafeSearchDto.getSearchCafeName()))
                 .orderBy(QCafe.cafe.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -35,6 +36,11 @@ public class CafeRepositoryCustomImpl implements CafeRepositoryCustom {
         List<Cafe> result = results.getResults();
         long total = results.getTotal();
         return new PageImpl<>(result,pageable,total);
+    }
+
+    private BooleanExpression searchByLike(String searchQuery) {
+
+        return QCafe.cafe.name.like("%" + searchQuery + "%");
     }
 
     private BooleanExpression searchMemberEq(Member memberType){
