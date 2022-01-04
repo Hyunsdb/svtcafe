@@ -5,7 +5,8 @@
 
     <th:block th:fragment="content">
 
-        <form th:action="@{/board/modify/{bno}(bno=${bno})}" th:method="post" th:object="${post}">
+        <form th:action="@{/board/post/{bno}/modify(bno=${bno})}" th:method="post" th:object="${post}">
+            <input type="hidden" name="_method" value="put"/>
 
             <div class="form-group">
                 <label>작성자</label>

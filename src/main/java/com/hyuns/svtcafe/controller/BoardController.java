@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 
 @Slf4j
@@ -29,7 +28,7 @@ import java.util.Map;
 public class BoardController {
     private final BoardService boardService;
 
-    @GetMapping({"/list"})
+    @GetMapping({"/posts"})
     public String getBoardList(@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
 
         //페이지 번호가 없으면 0
@@ -39,8 +38,17 @@ public class BoardController {
         model.addAttribute("maxPage", 5);
 
 
-        return "board/list";
+        return "board/posts";
     }
+
+
+    @GetMapping("/post/{bno}")
+    public String PostDetail(@PathVariable("bno") Long boardId, Model model) {
+        Board post = boardService.getPost(boardId);
+        model.addAttribute("post", post);
+        return "board/read";
+    }
+
 
     @GetMapping("/add")
     public String addPostForm(Model model) {
@@ -55,24 +63,17 @@ public class BoardController {
         }
 
         boardService.save(boardFormDto);
-        return "redirect:/board/list";
+        return "redirect:/board/posts";
     }
 
-    @GetMapping("/{bno}")
-    public String PostDetail(@PathVariable("bno") Long boardId, Model model) {
-        Board post = boardService.getPost(boardId);
-        model.addAttribute("post", post);
-        return "board/read";
-    }
-
-    @GetMapping("/modify/{bno}")
+    @GetMapping("/post/{bno}/modify")
     public String modifyPost(@PathVariable("bno") Long boardId, Model model) {
         Board post = boardService.getPost(boardId);
         model.addAttribute("post", post);
         return "board/modify";
     }
 
-    @PostMapping("/modify/{bno}")
+    @PutMapping("/post/{bno}/modify")
     public String updatePost(@Validated @ModelAttribute("post") BoardFormDto boardFormDto, BindingResult bindingResult, @PathVariable Long bno, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("bno", bno);
@@ -81,28 +82,18 @@ public class BoardController {
 
         boardService.updatePost(boardFormDto, bno);
 
-        return "redirect:/board/" + bno;
+        return "redirect:/board/post/" + bno;
     }
 
-    @PostMapping("/delete/{bno}")
+    @DeleteMapping("/post/{bno}")
     public String deletePost(@PathVariable Long bno) {
 
         System.out.println("===============================");
         boardService.deletePost(bno);
 
-        return "redirect:/board/list";
+        return "redirect:/board/posts";
     }
 
-
-
-//    @ResponseBody
-//    @PostMapping(value = "/modify/test")
-//    public void test(@RequestParam("pass1") String pass1, @RequestParam("bno") String bno){
-//
-//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-//        System.out.println(pass1);
-//        System.out.println(bno);
-//    }
 
     @ResponseBody
     @PostMapping(value = "/modify/login")
