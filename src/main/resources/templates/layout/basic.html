@@ -16,6 +16,7 @@
         <link th:href="@{/css/styles.css}" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     </head>
     <body>
     <!-- Responsive navbar-->
@@ -33,20 +34,6 @@
                         <a class="nav-link" th:href="@{/board/posts}">게시판</a>
                     </li>
                 </ul>
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
         </div>
     </nav>
@@ -59,7 +46,7 @@
 
     <footer th:fragment="fragment-footer" class="footer">
         <div class="row text-sm-center fixed-bottom">
-            <small class="d-block mb-3 ml-3 text-muted">얌얌이</small>
+                <small>Copyright &copy; 오현아. All rights reserved</small>
         </div>
     </footer>
 
