@@ -5,17 +5,30 @@
 
     <th:block th:fragment="content">
 
-        <div id="cafe_name" th:text="${cafe.name}"></div>
-        <p th:text="${cafe.address}"></p>
-        <p th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
-        <p th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
 
-        <div id="map" class="rounded-circle" style="width:500px;height:350px;"></div>
+        <div class="container">
+            <div class="py-5 text-center" style="color: #b6d4fe">
+                <h2 class="border-4" th:text="${cafe.name}"></h2>
+            </div>
 
-        <blockquote class="twitter-tweet" lang="en"><a th:href="${cafe.cafeLink}"></a></blockquote>
+            <h5 class="text-center" th:text="${cafe.address}"></h5>
+
+            <h6 class="text-center" th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}+'~'+${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></h6>
+
+
+            <blockquote class="twitter-tweet tw-align-center" lang="en"><a th:href="${cafe.cafeLink}"></a></blockquote>
+
+            <hr class="my-3">
+
+            <div align="center">
+                <div id="map" class="rounded-circle" style="width:500px;height:350px;"></div>
+            </div>
+
+        </div>
 
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=019aada6053162de0702ac5dca067017&libraries=services"></script>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=019aada6053162de0702ac5dca067017&libraries=services"></script>
         <script>
             var cafe_address = "[[${cafe.address}]]";
             var cafe_name = "[[${cafe.name}]]";
@@ -34,7 +47,7 @@
             var geocoder = new kakao.maps.services.Geocoder();
 
             // 주소로 좌표 검색
-            geocoder.addressSearch(cafe_address, function(result, status) {
+            geocoder.addressSearch(cafe_address, function (result, status) {
 
                 // 정상적으로 검색이 완료됐으면
                 if (status === kakao.maps.services.Status.OK) {
@@ -49,7 +62,7 @@
 
                     // 인포윈도우로 장소에 대한 설명 표시
                     var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div style="width:150px;text-align:center;padding:6px 0;">'+cafe_name+'</div>'
+                        content: '<div style="width:150px;text-align:center;padding:6px 0;">' + cafe_name + '</div>'
                     });
                     infowindow.open(map, marker);
 

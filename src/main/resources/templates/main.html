@@ -24,7 +24,7 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">no</th>
+                        <th scope="col" style="color: #F7CAC9">♥</th>
                         <th scope="col">카페 목록</th>
                     </tr>
                     </thead>
@@ -32,9 +32,7 @@
                     <tbody>
                     <tr th:each="cafe : ${cafes}">
                         <th scope="row">
-
-                            <h5 th:text="${cafe.id}"></h5>
-
+                            <h6 th:text="${cafe.id}"></h6>
                             <div class="member-profile">
                                 <img class="member-profile-img" th:src="@{https://svt-cafe.s3.ap-northeast-2.amazonaws.com/}+${cafe.member}+@{.jpg}" />
                             </div>
@@ -49,10 +47,8 @@
                                 <p style="margin-bottom: 0px" th:text="${cafe.member}"></p>
                                 <p style="margin-bottom: 0px" th:text="${cafe.address}"></p>
                                 <p style="margin-bottom: 0px; font-size: small"
-                                   th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}"></p>
-                                <p style="margin-bottom: 0px; font-size: small"
-                                   th:text="${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></p>
-                            </a>
+                                   th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}+'~'+${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}">~</p>
+                                </a>
 
                         </td>
                     </tr>
