@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
+        <style>
+            .member-profile {
+                width: 70px;
+                height: 70px;
+                border-radius: 70%;
+                overflow: hidden;
+            }
+            .member-profile-img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <form th:action="@{/}" role="form" method="get" th:object="${cafes}">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="color: #F7CAC9">♥</th>
+                        <th scope="col">카페 목록</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="cafe : ${cafes}">
+                        <th scope="row">
+                            <h6 th:text="${cafe.id}"></h6>
+                            <div class="member-profile">
+                                <img class="member-profile-img" th:src="@{https://svt-cafe.s3.ap-northeast-2.amazonaws.com/}+${cafe.member}+@{.jpg}" />
+                            </div>
+                        </th>
+
+                        <td>
+                            <a th:href="@{'cafe/'+${cafe.id}}" target="_blank"
+                               style="text-decoration: none;">
+
+                                <div style="font-weight: bold; font-size: large; color: #92A8D1"
+                                     th:text="${cafe.name}"></div>
+                                <p style="margin-bottom: 0px" th:text="${cafe.member}"></p>
+                                <p style="margin-bottom: 0px" th:text="${cafe.address}"></p>
+                                <p style="margin-bottom: 0px; font-size: small"
+                                   th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}+'~'+${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}">~</p>
+                                </a>
+
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+
+                <!--페이지-->
+                <div th:with="start=${(cafes.number/maxPage)*maxPage + 1}, end=(${(cafes.totalPages == 0) ? 1 : (start + (maxPage - 1) < cafes.totalPages ? start + (maxPage - 1) : cafes.totalPages)})">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <!--이전 페이지-->
+                        <li class="page-item" th:classappend="${cafes.number eq 0}?'disabled'">
+                            <a th:href="@{/(page=${cafes.number-1},searchMemberType=${cafeSearchDto.searchMemberType},searchCafeName=${cafeSearchDto.searchCafeName})}"
+                               aria-label='Previous' class="page-link">
+                                <span aria-hidden='true'>&lt;</span>
+                            </a>
+                        </li>
+                        <!--현재 페이지 그룹-->
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                            th:classappend="${cafes.number eq page-1}?'active'">
+                            <a th:href="@{/(page=${page-1},searchMemberType=${cafeSearchDto.searchMemberType},searchCafeName=${cafeSearchDto.searchCafeName})}"
+                               th:text="${page}" class="page-link"></a>
+                        </li>
+                        <!--다음 페이지-->
+                        <li class="page-item" th:classappend="${cafes.number+1 ge cafes.totalPages}?'disabled'">
+                            <a th:href="@{/(page=${cafes.number+1},searchMemberType=${cafeSearchDto.searchMemberType},searchCafeName=${cafeSearchDto.searchCafeName})}"
+                               aria-label='Next' class="page-link">
+                                <span aria-hidden='true'>&gt;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+                <div class="col-md" th:object="${cafeSearchDto}">
+
+                    <div style="display: inline-block" class="form-check-inline">
+
+                        <select th:field="*{searchMemberType}" class="form-control" style="width: auto">
+                            <option value=""> 맴버 선택 ▼ </option>
+                            <option value="SCOUPS">에스쿱스</option>
+                            <option value="Jeonghan">정한</option>
+                            <option value="Joshua">조슈아</option>
+                            <option value="Jun">준</option>
+                            <option value="Hoshi">호시</option>
+                            <option value="Wonwoo">원우</option>
+                            <option value="WOOZI">우지</option>
+                            <option value="THE8">디에잇</option>
+                            <option value="Mingyu">민규</option>
+                            <option value="DK">도겸</option>
+                            <option value="SeungKwan">승관</option>
+                            <option value="Vernon">버논</option>
+                            <option value="Dino">디노</option>
+                        </select>
+
+                    </div>
+
+                    <div style="display: inline-block">
+                        <input th:field="*{searchCafeName}" type="text" class="form-control" placeholder="카페 이름으로 검색">
+                    </div>
+
+
+                    <div style="display: inline-block">
+                        <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+                    </div>
+
+                </div>
+            </form>
+
+
+        </div>
+    </th:block>
+</th:block>
+</html>
