@@ -8,13 +8,14 @@
 
         <div class="container">
             <div class="py-5 text-center" style="color: #b6d4fe">
-                <h2 class="border-4" th:text="${cafe.name}"></h2>
+                <h2 style="font-weight: bold" class="border-4" th:text="${cafe.name}"></h2>
             </div>
 
             <h5 class="text-center" th:text="${cafe.address}"></h5>
 
             <h6 class="text-center" th:text="${#temporals.format(cafe.eventStart,'yyyy-MM-dd')}+'~'+${#temporals.format(cafe.eventEnd,'yyyy-MM-dd')}"></h6>
 
+            <br>
 
             <blockquote class="twitter-tweet tw-align-center" lang="en"><a th:href="${cafe.cafeLink}"></a></blockquote>
 
@@ -23,7 +24,7 @@
             <div align="center">
                 <div id="map" class="rounded-circle" style="width:500px;height:350px;"></div>
             </div>
-
+            <br><br>
         </div>
 
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
