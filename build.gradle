@@ -1,8 +1,3 @@
-buildscript {
-	ext {
-		queryDslVersion = "5.0.0.M1"
-	}
-}
 plugins {
 	id 'org.springframework.boot' version '2.6.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -36,15 +31,14 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 
+	//querydsl
+	implementation 'com.querydsl:querydsl-jpa'
+	//쿼리타입(Q)를 생성할 때 필요
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	//querydsl 추가 끝
 
-
-
-// QueryDSL
-	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-	annotationProcessor(
-			"javax.persistence:javax.persistence-api",
-			"javax.annotation:javax.annotation-api",
-			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -53,13 +47,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-sourceSets {
-	main {
-		java {
-			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-		}
-	}
-}
 
 test {
 	useJUnitPlatform()
