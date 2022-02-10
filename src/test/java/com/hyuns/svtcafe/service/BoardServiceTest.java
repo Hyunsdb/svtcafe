@@ -37,9 +37,10 @@ class BoardServiceTest {
 
         //when
         Long savedId = boardService.save(boardFormDto);
+        Board post = boardService.getPost(savedId);
 
         //then
-        assertThat(savedId).isEqualTo(1L);
+        assertThat(savedId).isEqualTo(post.getId());
     }
 
     @Test
