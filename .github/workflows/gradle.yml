@@ -31,7 +31,7 @@ jobs:
     - name: Set up MySQL
       uses: samin/mysql-action@v1
       with:
-        character set server: 'utf9'
+        character set server: 'utf8'
         mysql database: 'svtcafe'
         mysql user: ${{ secrets.MYSQL_USER }}
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
