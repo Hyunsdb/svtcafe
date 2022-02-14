@@ -28,10 +28,16 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    
+    - name: Set up MySQL
+      uses: samin/mysql-action@v1
+      with:
+        character set server: 'utf9'
+        mysql database: svtcafe
+        mysql user: ${{ secrets.MYSQL_USER }}
+        mysql password: ${{ secrets.MYSQL_PASSWORD }}
+        
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
     
-        
     - name: Build with Gradle
       run: ./gradlew build
