@@ -21,13 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     
     # Task의 sequance 명시함
-    steps:
-    - name: Set up MySQL
-      uses: samin/mysql-action@v1
+    steps:        
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
       with:
         container port: 3306
-        character set server: 'utf8'
-        mysql database: 'svtcafe'
+        mysql version: '8.0'
+        mysql database: svtcafe
         mysql user: 'root'
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
         
