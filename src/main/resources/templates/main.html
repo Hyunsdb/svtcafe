@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
     <th:block th:fragment="content">
         <style>
             .member-profile {
@@ -34,12 +34,12 @@
                         <th scope="row">
                             <h6 th:text="${cafe.id}"></h6>
                             <div class="member-profile">
-                                <img class="member-profile-img" th:src="@{https://svt-cafe.s3.ap-northeast-2.amazonaws.com/}+${cafe.member}+@{.jpg}" />
+<!--                                <img class="member-profile-img" th:src="@{https://svt-cafe.s3.ap-northeast-2.amazonaws.com/}+${cafe.member}+@{.jpg}" />-->
                             </div>
                         </th>
 
                         <td>
-                            <a th:href="@{'cafe/'+${cafe.id}}" target="_blank"
+                            <a th:href="@{'/cafe/'+${cafe.id}}" target="_blank"
                                style="text-decoration: none;">
 
                                 <div style="font-weight: bold; font-size: large; color: #92A8D1"

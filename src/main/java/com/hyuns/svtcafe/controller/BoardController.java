@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/board")
+@RequestMapping("board")
 public class BoardController {
     private final BoardService boardService;
 

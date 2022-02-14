@@ -20,13 +20,13 @@ public class CafeController {
     @GetMapping("/add")
     public String addCafeForm(Model model) {
         model.addAttribute("cafeFormDto", new CafeFormDto());
-        return "/cafe/add";
+        return "cafe/add";
     }
 
     @PostMapping("/add")
     public String addCafe(@Validated @ModelAttribute CafeFormDto cafeFormDto, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            return "/cafe/add";
+            return "cafe/add";
         }
 
         cafeService.save(cafeFormDto);
@@ -37,6 +37,6 @@ public class CafeController {
     public String detailCafe(@PathVariable("cno") Long cno, Model model) {
         Cafe findCafe = cafeService.getDetail(cno);
         model.addAttribute("cafe", findCafe);
-        return "/cafe/read";
+        return "cafe/read";
     }
 }
