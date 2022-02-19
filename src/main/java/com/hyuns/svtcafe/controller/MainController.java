@@ -23,7 +23,7 @@ public class MainController {
     @GetMapping({"/","/{page}"})
     public String mainPage(Optional<Integer> page, CafeSearchDto cafeSearchDto, Model model) {
         //페이지 번호가 없으면 0
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,3);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,5);
         Page<Cafe> cafeList = cafeService.getMainPage(cafeSearchDto,pageable);
 
         model.addAttribute("cafes", cafeList);
