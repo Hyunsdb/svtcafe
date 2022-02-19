@@ -32,9 +32,8 @@
                     <tbody>
                     <tr th:each="cafe : ${cafes}">
                         <th scope="row">
-                            <h6 th:text="${cafe.id}"></h6>
                             <div class="member-profile">
-<!--                                <img class="member-profile-img" th:src="@{https://svt-cafe.s3.ap-northeast-2.amazonaws.com/}+${cafe.member}+@{.jpg}" />-->
+                                <img class="member-profile-img" th:src="@{https://svt-cafe.s3.ap-northeast-2.amazonaws.com/}+${cafe.member}+@{.jpg}" />
                             </div>
                         </th>
 
