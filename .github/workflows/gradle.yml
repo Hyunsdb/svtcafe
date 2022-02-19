@@ -39,7 +39,6 @@ jobs:
         mysql root password: ${{ secrets.MYSQL_PASSWORD }}
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
         
-        
     - name: Make MYSQL properties
       env:
         MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
@@ -82,7 +81,10 @@ jobs:
     
     - name: Build with Gradle
       run: ./gradlew build
-      
+
     - name: Docker build 
       run: | 
-        docker build -t svtcafe-cicd .
+        docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }} 
+        docker build -t spring-cicd . 
+        docker tag svtcafe-cicd hyunsdb/svtcafe-cicd:${GITHUB_SHA::7}
+        docker push hyunsdb/svtcafe-cicd:${GITHUB_SHA::7}
